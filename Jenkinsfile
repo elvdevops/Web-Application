@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'elvdevops/ansible-webapp'
+        DOCKER_CREDENTIALS = credentials('docker-credentials')
         KUBE_NAMESPACE = 'elvdevops-webapp'
     } 
 
@@ -13,7 +14,6 @@ pipeline {
             }
         }
 
-    stages {
         stage('Docker Login') {
             steps {
                 withCredentials([
