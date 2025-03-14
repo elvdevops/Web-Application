@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'elvdevops/ansible-webapp'
+        DOCKER_USERNAME = credentials('docker-credentials').username
+        DOCKER_PASSWORD = credentials('docker-credentials').password
         KUBE_NAMESPACE = 'elvdevops-webapp'
     }
 
@@ -13,6 +15,16 @@ pipeline {
             }
         }
 
+        stage('Docker Login') {
+            steps {
+                script {
+                    sh """
+                    echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                    """
+                }
+            }
+        }
+        
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE:latest .'
