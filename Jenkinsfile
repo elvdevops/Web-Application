@@ -16,13 +16,13 @@ pipeline {
 
         stage('Docker Login') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'github-docker-username', variable: 'DOCKER_USERNAME'),
-                    string(credentialsId: 'github-docker-password', variable: 'DOCKER_PASSWORD')
-                ]) {
-                    sh """
-                    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-                    """
+            withCredentials([
+            usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')
+            ]) 
+            {
+            sh """
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            """
                 }
             }
         }
@@ -35,8 +35,9 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-hub-credentials']) {
-                    sh 'docker push $DOCKER_IMAGE:latest'
+            withDockerRegistry([credentialsId: 'docker-credentials']) 
+            {
+            sh 'docker push $DOCKER_IMAGE:latest'
                 }
             }
         }
