@@ -3,8 +3,6 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'elvdevops/ansible-webapp'
-        DOCKER_USERNAME = ('docker-username')
-        DOCKER_PASSWORD = ('docker-password')
         KUBE_NAMESPACE = 'elvdevops-webapp'
     } 
 
@@ -15,11 +13,15 @@ pipeline {
             }
         }
 
+    stages {
         stage('Docker Login') {
             steps {
-                script {
+                withCredentials([
+                    string(credentialsId: 'github-docker-username', variable: 'DOCKER_USERNAME'),
+                    string(credentialsId: 'github-docker-password', variable: 'DOCKER_PASSWORD')
+                ]) {
                     sh """
-                    echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
                     """
                 }
             }
