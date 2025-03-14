@@ -1,0 +1,11 @@
+---
+- name: Deploy application
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Pull latest Docker image
+      command: docker pull your-image-name:latest
+
+    - name: Restart Docker container
+      command: docker run -d --name your-container-name -p 80:80 your-image-name:latest
