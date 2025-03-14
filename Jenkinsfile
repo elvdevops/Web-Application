@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'your-image-name'
-        KUBE_NAMESPACE = 'your-namespace'
+        DOCKER_IMAGE = 'elvdevops/ansible-webapp'
+        KUBE_NAMESPACE = 'elvdevops-webapp'
     }
 
     stages {
