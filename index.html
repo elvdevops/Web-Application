@@ -1,4 +1,30 @@
+<!DOCTYPE html>
+<html>
 <head>
     <title>CI/CD Trigger</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+<body>
+    <h1>Trigger Jenkins Build</h1>
+    <button onclick="triggerBuild()">Trigger Build</button>
+    <p id="response"></p>
+    
+<script>
+    async function triggerBuild() {
+    const responseElem = document.getElementById('response');
+
+    try {
+        const response = await fetch('/trigger-build', {
+            method: 'POST'
+        });
+        const data = await response.json();
+        responseElem.textContent = data.message;
+    } catch (error) {
+        responseElem.textContent = 'Error triggering build';
+    }
+    }
+</script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
