@@ -6,7 +6,7 @@ pipeline {
         DOCKER_USERNAME = credentials('docker-credentials').username
         DOCKER_PASSWORD = credentials('docker-credentials').password
         KUBE_NAMESPACE = 'elvdevops-webapp'
-    }
+    } 
 
     stages {
         stage('Checkout Code') {
