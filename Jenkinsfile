@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'elvdevops/ansible-webapp'
-        DOCKER_USERNAME = credentials('docker-credentials').username
-        DOCKER_PASSWORD = credentials('docker-credentials').password
+        DOCKER_USERNAME = ('docker-username')
+        DOCKER_PASSWORD = ('docker-password')
         KUBE_NAMESPACE = 'elvdevops-webapp'
     } 
 
